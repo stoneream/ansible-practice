@@ -1,8 +1,11 @@
 # ansible-practice
 
-Ansibleでサーバー構築する練習（のメモ）
+Ansibleでサーバー構築する練習のメモ  
+いろいろ雑多においてあります。  
 
-## Ansibleのインストール
+- [標準的なWebアプリケーションのサーバー構築をAnsibleでやりたい](web-app/index.md)
+
+## Ansibleのインストール方法
 
 ```bash
 sudo apt install software-properties-common
@@ -39,7 +42,7 @@ mkdir {group_vars,host_vars,roles}
 inventory = 対象サーバー（たち）  
 グループ化しておいたほうが扱いやすい  
 
-iniで書く場合は暗黙的にallというグループが定義され、全ホストが所属している
+iniで書く場合は暗黙的にallというグループが定義され、全ホストが所属しているっぽい
 
 ### 参考
 
@@ -47,8 +50,7 @@ iniで書く場合は暗黙的にallというグループが定義され、全�
 - [How to build your inventory — Ansible Documentation](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups)
 - [インベントリーの構築方法 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/intro_inventory.html#inventoryformat)
 
-
-## メモ
+## 学習リソース
 
 - [Ansible tips and tricks — Ansible Documentation](https://docs.ansible.com/ansible/latest/tips_tricks/index.html)
   - 公式ドキュメント
