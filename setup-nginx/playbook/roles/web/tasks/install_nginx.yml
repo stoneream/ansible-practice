@@ -1,0 +1,10 @@
+---
+- name: install nginx & update cache
+  hosts: web
+  become: yes
+  tasks:
+    - name: cache updated & nginx installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
