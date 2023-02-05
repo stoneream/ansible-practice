@@ -42,3 +42,6 @@ PLAY RECAP *********************************************************************
 web01                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 web02                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+- todo
+  - nginxの設定ファイルを配布 -> 検証 -> 再起動
