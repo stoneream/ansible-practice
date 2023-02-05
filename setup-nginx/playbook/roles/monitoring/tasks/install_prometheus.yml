@@ -1,0 +1,10 @@
+---
+- name: install prometheus
+  hosts: monitoring
+  become: yes
+  tasks:
+    - name: cache updated & prometheus installed
+      apt:
+        name: prometheus
+        state: present
+        update_cache: true

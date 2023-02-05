@@ -1,0 +1,10 @@
+---
+- name: install prometheus-node-exporter & update cache
+  hosts: all
+  become: yes
+  tasks:
+    - name: cache updated & prometheus-node-exporter installed
+      apt:
+        name: prometheus-node-exporter
+        state: present
+        update_cache: true

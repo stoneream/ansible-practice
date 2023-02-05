@@ -40,7 +40,7 @@ ansible-playbook -i hosts.yml roles/common/tasks/configure-hosts-file.yml
 
 ```bash
 # タスク内容の確認
-ansible-playbook -i hosts.yml --list-tasks install_nginx.yml
+ansible-playbook -i hosts.yml --list-tasks roles/web/tasks/install_nginx.yml
 
 # 実行
 ansible-playbook -i hosts.yml roles/web/tasks/install_nginx.yml
@@ -84,8 +84,33 @@ ansible web -i hosts.yml -m ansible.builtin.command -a "nginx -V"
 
 [アドホックコマンドの概要 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/intro_adhoc.html)
 
-- todo
-  - nginxの設定ファイルを配布 -> 検証 -> 再起動
+## 監視サーバーの構築
+
+nginx, prometheusをインストールし、設定ファイルを投入
+
+```bash
+ansible-playbook -i hosts.yml roles/monitoring/tasks/install_nginx.yml
+
+ansible-playbook -i hosts.yml roles/monitoring/tasks/install_prometheus.yml
+
+ansible-playbook -i hosts.yml roles/monitoring/tasks/configure-prometheus.yml
+```
+
+監視対象のサーバーにprometheus-node-exporterをインストール
+
+```bash
+ansible-playbook -i hosts.yml roles/common/tasks/install_prometheus_node_exporter.yml
+```
+
+### 設定ファイルの配布 -> 検証 -> 再起動 の流れについて
+
+- [Recording rules | Prometheus](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/#syntax-checking-rules)
+  - Syntax-checking rulesを参照
+- [ansible.builtin.command module – Execute commands on targets — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html)
+
+設定ファイルをコピーしたあとにシンタックスチェックを行う。  
+エラーだった場合は当該タスク以降の実行を注意する。（今回の場合はPrometheusの再起動）  
+（ansible.builtin.commandモジュールは実行したコマンドの戻り値が0以外の場合はエラーと見なされる。）  
 
 ## メモ
 

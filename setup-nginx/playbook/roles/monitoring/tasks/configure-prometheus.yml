@@ -1,0 +1,19 @@
+---
+- name: configure prometheus
+  hosts: monitoring
+  become: yes
+  tasks:
+    # - name: debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ lookup('ansible.builtin.template', '../templates/prometheus.j2') }}"
+    - name: configured prometheus.yml
+      template:
+        src: ../templates/prometheus.j2
+        dest: /etc/prometheus/prometheus.yml
+    - name: syntax check
+      ansible.builtin.command:
+        cmd: promtool check config /etc/prometheus/prometheus.yml
+    - name: restarted prometheus
+      ansible.builtin.systemd:
+        state: restarted
+        name: prometheus
