@@ -1,0 +1,10 @@
+---
+- name: install mariadb & update cache
+  hosts: db
+  become: yes
+  tasks:
+    - name: cache updated & mariadb installed
+      apt:
+        name: mariadb-server
+        state: present
+        update_cache: true

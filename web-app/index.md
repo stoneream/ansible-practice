@@ -4,21 +4,21 @@
 
 | ホスト名 | 説明         |
 | :------- | :----------- |
-| web01    | Webサーバー  |
-| web02    | Webサーバー  |
-| mon01    | 監視サーバー |
+| web01    | Webサーバー（nginx）  |
+| web02    | Webサーバー（nginx）  |
+| mon01    | 監視サーバー（Prometheus） |
+| db01 | DBサーバー（マスター） |
+| db02 | DBサーバー（スレーブ） |
 
-- 監視サーバーではPrometheusが動いている
-- WebサーバーではNginxが動いている
 - それぞれのサーバーにはPrometheusのexporterが動いている
 - **そのうちやる**
   - アプリケーションサーバーを立てる
     - 動かすアプリケーションは決まってない
     - Webサーバーをリバースプロキシにする
     - デプロイ & 切り戻し をできるようにする
-  - データベースサーバー（マスター・スレーブ構成）
   - バックアップとかその他の保守系の作業がAnsibleでできるか検証
   - 秘匿情報をうまく扱う仕組みがあるっぽいので検証
+  - インストール系のplaybookを一つにまとめたい
 
 ## サーバーの展開
 
@@ -135,6 +135,16 @@ ansible-playbook -i hosts.yml roles/common/tasks/install_prometheus_node_exporte
 設定ファイルをコピーしたあとにシンタックスチェックを行う。  
 エラーだった場合は当該タスク以降の実行を注意する。（今回の場合はPrometheusの再起動）  
 （ansible.builtin.commandモジュールは実行したコマンドの戻り値が0以外の場合はエラーと見なされる。）  
+
+## DBサーバーの構築
+
+MariaDBをインストールする。
+
+```bash
+ansible-playbook -i hosts.yml roles/db/tasks/install_mariadb.yml
+```
+
+todo マスター・スレーブ構成を構築する
 
 ## メモ
 
